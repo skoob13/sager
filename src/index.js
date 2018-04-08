@@ -13,7 +13,7 @@ const defaultOptions = {
 };
 
 export default (options) => {
-  const { reducers, sagas } = Object.keys(types).map((data, type) => {
+  const { reducers, sagas } = Object.keys(types).reduce((data, type) => {
     const typeConfig = types[type];
     const saga = sagaCreator(typeConfig, { ...defaultOptions, ...options });
     const reducer = reducerCreator(typeConfig);

@@ -37,6 +37,7 @@ export const generateSaga = ({
           payload,
           request,
           result,
+          withSchema: !!schema,
         });
       }
 
@@ -53,6 +54,7 @@ export const generateSaga = ({
           payload,
           request,
           result,
+          withSchema: !!schema,
         });
       }
     } catch (error) {
@@ -80,7 +82,7 @@ export const generateSaga = ({
 
 // TODO: make as FORK
 const sagaCreator = (params, options) => {
-  const { effect = takeEvery, throttleTime, typeCreator } = params;
+  const { effect, throttleTime, typeCreator } = params;
 
   function* saga() {
     const generatedSaga = generateSaga(params, options);

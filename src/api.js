@@ -7,7 +7,7 @@ export const prefixUrl = (path, endpoint) =>
 
 const request = method => (path, options = {}, token, authorizationName) => {
   const { body, params, headers = {} } = options;
-
+  console.log(path)
   if (token) {
     headers.Authorization = `${authorizationName} ${token}`;
   }
@@ -28,12 +28,13 @@ const apiClient = methods.reduce((reduced, method) => ({
   [method]: request(method),
 }), {});
 
-export const makeRequest = (config, extenders = {}, options = {}) => {
-  const { path, authorizationName } = options;
+export const makeRequest = (config, extenders = {}) => {
   const {
-    url,
+    authorizationName,
     method,
+    path,
     token,
+    url,
     request: requestConfig,
   } = { ...extenders, ...config };
   return apiClient[method](

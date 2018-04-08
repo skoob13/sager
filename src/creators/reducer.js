@@ -8,12 +8,12 @@ export const initialState = Immutable({
 });
 
 const reducerCreator = ({
-  reducer,
+  typeCreator,
   flushErrorsOnRequest,
   flushReducerAction,
 }) =>
   (state = initialState, action) => {
-    if (action.type === reducer.request) {
+    if (action.type === typeCreator.request) {
       return Immutable(state).merge({
         loading: true,
         loaded: false,
@@ -21,7 +21,7 @@ const reducerCreator = ({
       });
     }
 
-    if (action.type === reducer.success) {
+    if (action.type === typeCreator.success) {
       return Immutable(state).merge({
         loading: false,
         loaded: true,
@@ -30,7 +30,7 @@ const reducerCreator = ({
       });
     }
 
-    if (action.type === reducer.failure) {
+    if (action.type === typeCreator.failure) {
       return Immutable(state).merge({
         loading: false,
         loaded: false,
