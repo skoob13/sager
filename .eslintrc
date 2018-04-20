@@ -1,0 +1,24 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "rules": {
+    "linebreak-style": "off",
+    "import/prefer-default-export": [
+      0
+    ]
+  },
+  "env": {
+    "browser": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": [
+          "src"
+        ]
+      }
+    },
+    "ecmascript": 6,
+    "jsx": true
+  }
+}
