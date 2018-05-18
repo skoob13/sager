@@ -27,7 +27,6 @@ export const generateSaga = ({
 
       const { data: result } = data;
       let payload = schema ? normalize(result, schema) : result;
-
       if (hooks.beforeSuccess) {
         payload = yield call(hooks.beforeSuccess, {
           payload,
@@ -77,6 +76,7 @@ export const generateSaga = ({
 };
 
 // TODO: make as FORK
+// TODO: test this
 const sagaCreator = (params, options) => {
   const { effect, throttleTime, typeCreator } = params;
 
