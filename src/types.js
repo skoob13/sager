@@ -17,6 +17,10 @@ const defaultConfig = {
 
 export const createType = (config) => {
   const { reducer, type } = config;
+  if (!reducer || !type) {
+    // eslint-disable-next-line
+    console.error('redux-entities: type or reducer are required fields');
+  }
   const typeCreator = makeType(type);
 
   types[reducer] = {

@@ -2,7 +2,7 @@
 
 * path
 * tokenSelector
-* authorizationName
+* authorizationType
 * /*
 hooks:
 beforeRequest

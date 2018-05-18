@@ -2,17 +2,16 @@ import axios from 'axios';
 import { isUri } from 'valid-url';
 
 export const methods = ['get', 'post', 'patch', 'put', 'delete'];
-export const prefixUrl = (path, endpoint) =>
-  `${isUri(endpoint) ? '' : path}/${endpoint}`;
+export const prefixUrl = (path, endpoint) => `${isUri(endpoint) ? '' : `${path}/`}${endpoint}`;
 
-const request = method => (path, options = {}, token, authorizationName) => {
+const request = method => (path, options = {}, token, authorizationType) => {
   const { body, params, headers = {} } = options;
 
   if (token) {
-    headers.Authorization = `${authorizationName} ${token}`;
+    headers.Authorization = `${authorizationType} ${token}`;
   }
 
-  if (method === 'post' || method === 'patch' || method === 'put') {
+  if (method !== 'get') {
     return axios[method](path, body, { headers });
   }
 
@@ -30,18 +29,18 @@ const apiClient = methods.reduce((reduced, method) => ({
 
 export const makeRequest = (config, extenders = {}) => {
   const {
-    authorizationName,
+    authorizationType,
     method,
     path,
     token,
     url,
     request: requestConfig,
   } = { ...extenders, ...config };
-  return apiClient[method](
+  return apiClient[method.toLowerCase()](
     prefixUrl(path, url),
     requestConfig,
     token,
-    authorizationName,
+    authorizationType,
   );
 };
 

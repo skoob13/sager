@@ -6,7 +6,7 @@ import reducerCreator from './creators/reducer';
 import sagaCreator from './creators/saga';
 
 const defaultOptions = {
-  authorizationName: '',
+  authorizationType: '',
   hooks: {},
   path: '',
   tokenSelector: null,
