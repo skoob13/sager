@@ -1,4 +1,4 @@
-import { put, call, takeEvery, select, throttle } from 'redux-saga/effects';
+import { put, call, select, throttle } from 'redux-saga/effects';
 import { normalize } from 'normalizr';
 import { makeRequest } from '../api';
 
@@ -24,10 +24,6 @@ export const generateSaga = ({
       if (hooks.request) {
         yield call(hooks.request, request);
       }
-
-      // if (process.ENV.test && data.TEST_ERROR) {
-      //   throw data;
-      // }
 
       const { data: result } = data;
       let payload = schema ? normalize(result, schema) : result;

@@ -7,7 +7,7 @@ export const prefixUrl = (path, endpoint) =>
 
 const request = method => (path, options = {}, token, authorizationName) => {
   const { body, params, headers = {} } = options;
-  console.log(path)
+
   if (token) {
     headers.Authorization = `${authorizationName} ${token}`;
   }

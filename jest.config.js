@@ -2,7 +2,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.{js}',
   ],
-  setupFiles: [],
+  setupFiles: ['<rootDir>/jestEnvironment.js'],
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.{js}',
     '<rootDir>/src/**/?(*.)(spec|test).{js}',
@@ -15,4 +15,5 @@ module.exports = {
     '[/\\\\]node_modules[/\\\\].+\\.(js)$',
   ],
   moduleFileExtensions: ['js'],
+  unmockedModulePathPatterns: ['babel-core'],
 };
