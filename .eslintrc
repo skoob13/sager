@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb",
+  "extends": "airbnb/base",
   "rules": {
     "linebreak-style": "off",
     "import/prefer-default-export": [
@@ -18,7 +18,6 @@
         ]
       }
     },
-    "ecmascript": 6,
-    "jsx": true
+    "ecmascript": 6
   }
 }
