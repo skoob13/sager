@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { makeRequest } from './api';
-import { types } from './types';
+import { types, createType } from './types';
 import typeCreator from './creators/type';
 import reducerCreator from './creators/reducer';
 import sagaCreator from './creators/saga';
@@ -33,6 +33,7 @@ export default (options) => {
 };
 
 export {
-  typeCreator,
+  createType,
   makeRequest,
+  typeCreator,
 };
