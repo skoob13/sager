@@ -43,7 +43,6 @@ const config = {
     modules: [path.resolve('./node_modules'), path.resolve('./src')],
     extensions: ['.json', '.js']
   },
-  externals: [nodeExternals()],
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
