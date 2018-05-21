@@ -1,5 +1,7 @@
 # redux-entities
 
+[![Coverage Status](https://coveralls.io/repos/github/skoob13/sager/badge.svg?branch=master)](https://coveralls.io/github/skoob13/sager?branch=master)
+
 ## Introduction to proposal
 
 Repository proposes a set of organization rules for Redux logic based on entities approach.
