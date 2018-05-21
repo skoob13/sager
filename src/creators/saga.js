@@ -1,4 +1,4 @@
-import { put, call, select, throttle } from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 import { normalize } from 'normalizr';
 import { makeRequest } from '../api';
 
@@ -82,7 +82,7 @@ const sagaCreator = (params, options) => {
 
   function* saga() {
     const generatedSaga = generateSaga(params, options);
-    if (effect === throttle) {
+    if (throttleTime > 0) {
       yield effect(throttleTime, typeCreator.request, generatedSaga);
     } else {
       yield effect(typeCreator.request, generatedSaga);

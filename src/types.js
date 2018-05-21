@@ -11,7 +11,7 @@ const defaultConfig = {
   reducer: null,
   saga: null,
   schema: null,
-  throttleTime: 500,
+  throttleTime: 0,
   type: null,
 };
 
