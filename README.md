@@ -80,7 +80,7 @@ entities.results[JSON.stringify(action)].map(key => entities.posts[key])
 
 #### Why hash function is better than object
 
-Basically every developer would like to minify amount of work required for data processing. Hash function could reduce amount of possible work connected with entities' processing. Obviously, there are moments when you would like to control processing, but for must cases a hash works for you.
+Basically every developer would like to minify amount of work required for data processing. Hash function could reduce amount of possible work connected with entities' processing. Obviously, there are moments when you would like to control processing, but for most cases a hash works for you.
 
 From the other side of question, hash keys could remove nesting from results. Let's assume next example.
 
