@@ -2,9 +2,9 @@
   "name": "redux-entities",
   "version": "0.0.1",
   "description": "",
-  "main": "src/index.js",
+  "main": "lib/redux-entities.js",
   "scripts": {
-    "build": "webpack --env dev && webpack --env build",
+    "build": "rm -rf lib && webpack --env dev && webpack --env build",
     "dev": "webpack --progress --colors --watch --env dev",
     "test": "export BABEL_ENV=test && export NODE_ENV='test' && jest --watch",
     "eslint": "./node_modules/.bin/eslint src",

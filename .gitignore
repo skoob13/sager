@@ -7,7 +7,7 @@
 /coverage
 
 # npm
-/lib
+# /lib
 
 # misc
 .DS_Store
