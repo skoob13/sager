@@ -337,7 +337,7 @@ Notes:
 Helper function for requests. Has next structure:
 
 ```
-(options, extenders) => axious[method](...)
+(options, extenders) => axios[method](...)
 ```
 
 So there are next available options:
