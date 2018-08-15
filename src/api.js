@@ -16,7 +16,7 @@ const request = method => ({
     headers.Authorization = `${authorizationType} ${token}`;
   }
 
-  if (method !== 'get') {
+  if (!(method === 'get' || method === 'delete')) {
     return axios[method](path, body, { headers });
   }
 
