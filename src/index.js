@@ -12,6 +12,7 @@ const defaultOptions = {
   hooks: {},
   path: '',
   tokenSelector: null,
+  getHeaders: null,
 };
 
 export default (options) => {

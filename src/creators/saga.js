@@ -1,5 +1,6 @@
 import { put, call, select } from 'redux-saga/effects';
 import { normalize } from 'normalizr';
+import merge from 'deepmerge';
 import { makeRequest } from '../api';
 
 export const generateSaga = ({
@@ -7,9 +8,19 @@ export const generateSaga = ({
   schema,
   dispatchActions,
   saga,
-}, { hooks, tokenSelector, ...options }) => {
+}, {
+  hooks,
+  tokenSelector,
+  getHeaders,
+  ...options
+}) => {
   function* generatedSaga(request) {
     const token = tokenSelector ? yield select(tokenSelector) : '';
+
+    const requestParams = {};
+    if (getHeaders) {
+      requestParams.headers = yield call(getHeaders, request);
+    }
 
     try {
       if (hooks.beforeRequest) {
@@ -18,6 +29,7 @@ export const generateSaga = ({
 
       const data = yield call(saga || makeRequest, {
         ...request,
+        request: merge(request.request || {}, requestParams),
         token,
       }, options);
 

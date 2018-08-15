@@ -4,8 +4,13 @@ import { isUri } from 'valid-url';
 export const methods = ['get', 'post', 'patch', 'put', 'delete'];
 export const prefixUrl = (path, endpoint) => `${isUri(endpoint) ? '' : `${path}/`}${endpoint}`;
 
-const request = method => (path, options = {}, token, authorizationType) => {
-  const { body, params, headers = {} } = options;
+const request = method => ({
+  path,
+  options = {},
+  token,
+  authorizationType,
+}) => {
+  const { body, params, headers } = options;
 
   if (token) {
     headers.Authorization = `${authorizationType} ${token}`;
@@ -36,12 +41,12 @@ export const makeRequest = (config, extenders = {}) => {
     url,
     request: requestConfig,
   } = { ...extenders, ...config };
-  return apiClient[method.toLowerCase()](
-    prefixUrl(path, url),
-    requestConfig,
+  return apiClient[method.toLowerCase()]({
     token,
     authorizationType,
-  );
+    path: prefixUrl(path, url),
+    options: requestConfig,
+  });
 };
 
 export default apiClient;
