@@ -1,6 +1,4 @@
 import { combineReducers } from 'redux';
-import 'babel-core/register';
-import 'babel-polyfill';
 import { makeRequest } from './api';
 import { types, createType } from './types';
 import typeCreator from './creators/type';

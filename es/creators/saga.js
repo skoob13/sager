@@ -1,45 +1,11 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.generateSaga = void 0;
-
-require("core-js/modules/es6.array.for-each");
-
-require("core-js/modules/es6.array.filter");
-
-require("core-js/modules/es6.object.define-property");
-
-require("core-js/modules/es6.array.index-of");
-
-require("core-js/modules/web.dom.iterable");
-
-require("core-js/modules/es6.array.iterator");
-
-require("core-js/modules/es6.object.keys");
-
-require("regenerator-runtime/runtime");
-
-var _effects =
-/*#__PURE__*/
-require("redux-saga/effects");
-
-var _normalizr =
-/*#__PURE__*/
-require("normalizr");
-
-var _deepmerge =
-/*#__PURE__*/
-_interopRequireDefault(
-/*#__PURE__*/
-require("deepmerge"));
-
-var _api =
-/*#__PURE__*/
-require("../api");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+import "core-js/modules/es6.array.for-each";
+import "core-js/modules/es6.array.filter";
+import "core-js/modules/es6.object.define-property";
+import "core-js/modules/es6.array.index-of";
+import "core-js/modules/web.dom.iterable";
+import "core-js/modules/es6.array.iterator";
+import "core-js/modules/es6.object.keys";
+import "regenerator-runtime/runtime";
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -47,7 +13,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-var generateSaga = function generateSaga(_ref2, _ref) {
+import { put, call, select } from 'redux-saga/effects';
+import { normalize } from 'normalizr';
+import merge from 'deepmerge';
+import { makeRequest } from '../api';
+export var generateSaga = function generateSaga(_ref2, _ref) {
   var _marked =
   /*#__PURE__*/
   regeneratorRuntime.mark(generatedSaga);
@@ -74,7 +44,7 @@ var generateSaga = function generateSaga(_ref2, _ref) {
             }
 
             _context.next = 3;
-            return (0, _effects.select)(tokenSelector);
+            return select(tokenSelector);
 
           case 3:
             _context.t0 = _context.sent;
@@ -94,7 +64,7 @@ var generateSaga = function generateSaga(_ref2, _ref) {
             }
 
             _context.next = 12;
-            return (0, _effects.call)(getHeaders, request);
+            return call(getHeaders, request);
 
           case 12:
             requestParams.headers = _context.sent;
@@ -108,12 +78,12 @@ var generateSaga = function generateSaga(_ref2, _ref) {
             }
 
             _context.next = 17;
-            return (0, _effects.call)(hooks.beforeRequest, request);
+            return call(hooks.beforeRequest, request);
 
           case 17:
             _context.next = 19;
-            return (0, _effects.call)(saga || _api.makeRequest, _objectSpread({}, request, {
-              request: (0, _deepmerge.default)(request.request || {}, requestParams),
+            return call(saga || makeRequest, _objectSpread({}, request, {
+              request: merge(request.request || {}, requestParams),
               token: token
             }), options);
 
@@ -126,11 +96,11 @@ var generateSaga = function generateSaga(_ref2, _ref) {
             }
 
             _context.next = 23;
-            return (0, _effects.call)(hooks.request, request);
+            return call(hooks.request, request);
 
           case 23:
             result = data.data;
-            payload = schema ? (0, _normalizr.normalize)(result, schema) : result;
+            payload = schema ? normalize(result, schema) : result;
 
             if (!hooks.beforeSuccess) {
               _context.next = 29;
@@ -138,7 +108,7 @@ var generateSaga = function generateSaga(_ref2, _ref) {
             }
 
             _context.next = 28;
-            return (0, _effects.call)(hooks.beforeSuccess, {
+            return call(hooks.beforeSuccess, {
               payload: payload,
               request: request,
               result: result,
@@ -155,7 +125,7 @@ var generateSaga = function generateSaga(_ref2, _ref) {
             }
 
             _context.next = 32;
-            return (0, _effects.put)({
+            return put({
               type: typeCreator.success,
               action: request,
               payload: payload
@@ -168,7 +138,7 @@ var generateSaga = function generateSaga(_ref2, _ref) {
             }
 
             _context.next = 35;
-            return (0, _effects.call)(hooks.success, {
+            return call(hooks.success, {
               payload: payload,
               request: request,
               result: result,
@@ -189,7 +159,7 @@ var generateSaga = function generateSaga(_ref2, _ref) {
             }
 
             _context.next = 42;
-            return (0, _effects.call)(hooks.beforeFailure, {
+            return call(hooks.beforeFailure, {
               error: _context.t1,
               request: request
             });
@@ -201,7 +171,7 @@ var generateSaga = function generateSaga(_ref2, _ref) {
             }
 
             _context.next = 45;
-            return (0, _effects.put)({
+            return put({
               type: typeCreator.failure,
               errors: _context.t1
             });
@@ -213,7 +183,7 @@ var generateSaga = function generateSaga(_ref2, _ref) {
             }
 
             _context.next = 48;
-            return (0, _effects.call)(hooks.failure, {
+            return call(hooks.failure, {
               error: _context.t1,
               request: request
             });
@@ -229,9 +199,6 @@ var generateSaga = function generateSaga(_ref2, _ref) {
   return generatedSaga;
 }; // TODO: make as FORK
 // TODO: test this
-
-
-exports.generateSaga = generateSaga;
 
 var sagaCreator = function sagaCreator(params, options) {
   var _marked2 =
@@ -277,5 +244,4 @@ var sagaCreator = function sagaCreator(params, options) {
   return saga;
 };
 
-var _default = sagaCreator;
-exports.default = _default;
+export default sagaCreator;
