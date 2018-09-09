@@ -21,6 +21,12 @@ export const createType = (config) => {
     // eslint-disable-next-line
     console.error('redux-entities: type or reducer are required fields');
   }
+
+  if (types[reducer] && types[reducer].type !== type) {
+    // eslint-disable-next-line
+    console.error(`redux-entities: reducer with name ${reducer} exists already`);
+  }
+
   const typeCreator = makeType(type);
 
   types[reducer] = {
