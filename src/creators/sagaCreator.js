@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 import { normalize } from 'normalizr';
 import merge from 'deepmerge';
-import { types } from '../types';
+import types from '../types';
 import { makeRequest } from '../api';
 
 export const generateSaga = ({

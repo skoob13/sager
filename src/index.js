@@ -1,10 +1,10 @@
-import { createType } from './types';
+import createType from './types';
 import entitiesFactory from './factory';
 import { makeRequest } from './api';
 import bindSaga from './binders/saga';
-import typeCreator from './creators/type';
-import reducerCreator from './creators/reducer';
-import sagaCreator from './creators/saga';
+import typeCreator from './creators/typeConstantCreator';
+import reducerCreator from './creators/reducerCreator';
+import sagaCreator from './creators/sagaCreator';
 
 const creators = {
   typeCreator,

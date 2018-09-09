@@ -1,7 +1,7 @@
 import { fork } from 'redux-saga/effects';
-import { types } from './types';
-import reducerCreator from './creators/reducer';
-import sagaCreator from './creators/saga';
+import types from './types';
+import reducerCreator from './creators/reducerCreator';
+import sagaCreator from './creators/sagaCreator';
 
 const defaultOptions = {
   authorizationType: '',
