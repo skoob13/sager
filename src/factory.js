@@ -1,9 +1,9 @@
-import { fork } from 'redux-saga/effects';
+import { all, fork } from 'redux-saga/effects';
 import types from './types';
 import reducerCreator from './creators/reducerCreator';
 import sagaCreator from './creators/sagaCreator';
 
-const defaultOptions = {
+export const defaultOptions = {
   authorizationType: '',
   hooks: {},
   path: '',
@@ -32,7 +32,7 @@ export default (options) => {
   }, { reducers: {}, sagas: [] });
 
   function* rootReduxEntitiesSaga() {
-    yield sagas.map(saga => fork(saga));
+    yield all(sagas.map(saga => fork(saga)));
   }
 
   return {
