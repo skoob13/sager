@@ -87,8 +87,6 @@ export const generateSaga = ({
   return generatedSaga;
 };
 
-// TODO: make as FORK
-// TODO: test this
 const sagaCreator = (params, options) => {
   const { effect, throttleTime, typeCreator } = params;
 

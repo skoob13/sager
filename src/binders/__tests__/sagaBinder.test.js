@@ -14,4 +14,18 @@ describe('saga binder', () => {
     bindSaga(type, () => {});
     expect(types.reducer.saga).toBeTruthy();
   });
+
+  test('should throw console error if there is no type', () => {
+    global.console = { error: jest.fn(), log: jest.fn() };
+
+    const type = createType({
+      type: 'hey',
+      reducer: 'reducer',
+    });
+    bindSaga({
+      ...type,
+      type: null,
+    }, () => {});
+    expect(console.error).toHaveBeenCalledTimes(1);
+  });
 });
