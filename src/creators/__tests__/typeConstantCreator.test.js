@@ -1,11 +1,12 @@
 import type from '../typeConstantCreator';
 
-describe('type creator tests', () => {
+describe('type constant creator tests', () => {
   test('it should return correct type', () => {
-    expect(type('type')).toEqual({
+    expect(type('type', 'type')).toEqual({
       request: '@@api/type/request',
       success: '@@api/type/success',
       failure: '@@api/type/failure',
+      type: 'type',
     });
   });
   
@@ -14,6 +15,7 @@ describe('type creator tests', () => {
       request: '@@api//request',
       success: '@@api//success',
       failure: '@@api//failure',
+      type: undefined,
     });
   });
 });
