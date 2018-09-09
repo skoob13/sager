@@ -37,7 +37,6 @@
   },
   "peerDependencies": {
     "normalizr": "^3.2.4",
-    "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "seamless-immutable": "^7.1.3"
   },

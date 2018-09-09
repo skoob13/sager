@@ -1,42 +1,21 @@
-import { combineReducers } from 'redux';
+import { createType } from './types';
+import entitiesFactory from './factory';
 import { makeRequest } from './api';
-import { types, createType } from './types';
 import bindSaga from './binders/saga';
 import typeCreator from './creators/type';
 import reducerCreator from './creators/reducer';
 import sagaCreator from './creators/saga';
 
-const defaultOptions = {
-  authorizationType: '',
-  hooks: {},
-  path: '',
-  tokenSelector: null,
-  getHeaders: null,
+const creators = {
+  typeCreator,
+  reducerCreator,
+  sagaCreator,
 };
 
-export default (options) => {
-  const { reducers, sagas } = Object.keys(types).reduce((data, type) => {
-    const typeConfig = types[type];
-    const saga = sagaCreator(typeConfig, { ...defaultOptions, ...options });
-    const reducer = reducerCreator(typeConfig);
-    return {
-      reducers: {
-        ...data.reducers,
-        [type]: reducer,
-      },
-      sagas: [...data.sagas, saga],
-    };
-  }, { reducers: {}, sagas: [] });
-
-  return {
-    sagas,
-    reducers: combineReducers(reducers),
-  };
-};
-
+export default entitiesFactory;
 export {
   createType,
   makeRequest,
-  typeCreator,
   bindSaga,
+  creators,
 };
