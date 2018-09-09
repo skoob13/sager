@@ -16,6 +16,7 @@ describe('type creator tests', () => {
   });
 
   test('it should merge a type', () => {
+    global.console = { error: jest.fn(), log: jest.fn() };
     createType({
       type: 'type',
       reducer: 'reducer',
@@ -24,11 +25,23 @@ describe('type creator tests', () => {
       type: 'type2',
       reducer: 'reducer',
     });
+    expect(console.error).toHaveBeenCalledTimes(1);
     expect(types.reducer).toEqual({
       ...defaultTypeConfig,
       type: 'type2',
       reducer: 'reducer',
       typeCreator: type2,
     });
+  });
+
+  test('it should throw error on empty reducer or type', () => {
+    global.console = { error: jest.fn(), log: jest.fn() };
+    createType({
+      reducer: 'reducer_test_throw',
+    });
+    createType({
+      type: 'reducer_test_throw',
+    });
+    expect(console.error).toHaveBeenCalledTimes(2);
   });
 });
