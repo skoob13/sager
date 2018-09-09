@@ -1,10 +1,13 @@
 import { testSaga } from 'redux-saga-test-plan';
 import { schema, normalize } from 'normalizr';
 import { makeRequest } from '../../api';
-import { generateSaga } from '../saga';
-import type from '../type';
+import { generateSaga } from '../sagaCreator';
+import typeCreator from '../typeCreator';
 
-const sagaType = type('type');
+const sagaType = typeCreator({
+  type: 'type',
+  reducer: 'type',
+});
 
 describe('test saga creator', () => {
   test('test default successful saga lifecycle with actions', () => {
@@ -302,30 +305,41 @@ describe('test saga creator', () => {
         method: 'GET',
       },
     };
-    const customFunction = () => {};
+
     function* customGenerator() {}
-    let s = generateSaga({ typeCreator: sagaType, dispatchActions: true, saga: customGenerator }, { hooks });
+    const newType = typeCreator({
+      type: 'new type',
+      reducer: 'new type reducer',
+      saga: customGenerator,
+    });
+    let s = generateSaga({ typeCreator: newType, dispatchActions: true }, { hooks });
 
     testSaga(s, req)
       .next()
       .call(customGenerator, { ...req, token: '' }, {})
       .next({ data: [] })
       .put({
-        type: sagaType.success,
+        type: newType.success,
         payload: [],
         action: req,
       })
       .next()
       .isDone();
 
-    s = generateSaga({ typeCreator: sagaType, dispatchActions: true, saga: customFunction }, { hooks });
+    const customFunction = () => {};
+    const newTypeFunc = typeCreator({
+      type: 'new type',
+      reducer: 'new type reducer',
+      saga: customFunction,
+    });
+    s = generateSaga({ typeCreator: newTypeFunc, dispatchActions: true }, { hooks });
 
     testSaga(s, req)
       .next()
       .call(customFunction, { ...req, token: '' }, {})
       .next({ data: [] })
       .put({
-        type: sagaType.success,
+        type: newTypeFunc.success,
         payload: [],
         action: req,
       })

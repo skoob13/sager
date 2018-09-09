@@ -5,7 +5,6 @@ import types from '../types';
 import { makeRequest } from '../api';
 
 export const generateSaga = ({
-  reducer,
   typeCreator,
   schema,
   dispatchActions,
@@ -28,7 +27,7 @@ export const generateSaga = ({
         yield call(hooks.beforeRequest, request);
       }
 
-      const data = yield call(types[reducer].saga || makeRequest, {
+      const data = yield call(types[typeCreator.type].saga || makeRequest, {
         ...request,
         request: merge(request.request || {}, requestParams),
         token,

@@ -1,4 +1,4 @@
-import type from '../type';
+import type from '../typeConstantCreator';
 
 describe('type creator tests', () => {
   test('it should return correct type', () => {

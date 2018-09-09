@@ -1,6 +1,6 @@
 import Immutable from 'seamless-immutable';
-import typeCreator from '../type';
-import createReducer, { initialState } from '../reducer';
+import typeCreator from '../typeConstantCreator';
+import createReducer, { initialState } from '../reducerCreator';
 
 const type = typeCreator('T');
 
