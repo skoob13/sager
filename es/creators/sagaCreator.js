@@ -16,6 +16,7 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 import { put, call, select } from 'redux-saga/effects';
 import { normalize } from 'normalizr';
 import merge from 'deepmerge';
+import types from '../types';
 import { makeRequest } from '../api';
 export var generateSaga = function generateSaga(_ref2, _ref) {
   var _marked =
@@ -24,13 +25,12 @@ export var generateSaga = function generateSaga(_ref2, _ref) {
 
   var typeCreator = _ref2.typeCreator,
       schema = _ref2.schema,
-      dispatchActions = _ref2.dispatchActions,
-      saga = _ref2.saga;
+      dispatchActions = _ref2.dispatchActions;
 
   var hooks = _ref.hooks,
       tokenSelector = _ref.tokenSelector,
-      getHeaders = _ref.getHeaders,
-      options = _objectWithoutPropertiesLoose(_ref, ["hooks", "tokenSelector", "getHeaders"]);
+      extendRequest = _ref.extendRequest,
+      options = _objectWithoutPropertiesLoose(_ref, ["hooks", "tokenSelector", "extendRequest"]);
 
   function generatedSaga(request) {
     var token, requestParams, data, result, payload;
@@ -58,56 +58,48 @@ export var generateSaga = function generateSaga(_ref2, _ref) {
             token = _context.t0;
             requestParams = {};
 
-            if (!getHeaders) {
-              _context.next = 13;
-              break;
+            if (extendRequest) {
+              requestParams = extendRequest(request);
             }
 
-            _context.next = 12;
-            return call(getHeaders, request);
-
-          case 12:
-            requestParams.headers = _context.sent;
-
-          case 13:
-            _context.prev = 13;
+            _context.prev = 10;
 
             if (!hooks.beforeRequest) {
-              _context.next = 17;
+              _context.next = 14;
               break;
             }
 
-            _context.next = 17;
+            _context.next = 14;
             return call(hooks.beforeRequest, request);
 
-          case 17:
-            _context.next = 19;
-            return call(saga || makeRequest, _objectSpread({}, request, {
+          case 14:
+            _context.next = 16;
+            return call(types[typeCreator.type].saga || makeRequest, _objectSpread({}, request, {
               request: merge(request.request || {}, requestParams),
               token: token
             }), options);
 
-          case 19:
+          case 16:
             data = _context.sent;
 
             if (!hooks.request) {
-              _context.next = 23;
+              _context.next = 20;
               break;
             }
 
-            _context.next = 23;
+            _context.next = 20;
             return call(hooks.request, request);
 
-          case 23:
+          case 20:
             result = data.data;
             payload = schema ? normalize(result, schema) : result;
 
             if (!hooks.beforeSuccess) {
-              _context.next = 29;
+              _context.next = 26;
               break;
             }
 
-            _context.next = 28;
+            _context.next = 25;
             return call(hooks.beforeSuccess, {
               payload: payload,
               request: request,
@@ -115,29 +107,29 @@ export var generateSaga = function generateSaga(_ref2, _ref) {
               withSchema: !!schema
             });
 
-          case 28:
+          case 25:
             payload = _context.sent;
 
-          case 29:
+          case 26:
             if (!dispatchActions) {
-              _context.next = 32;
+              _context.next = 29;
               break;
             }
 
-            _context.next = 32;
+            _context.next = 29;
             return put({
               type: typeCreator.success,
               action: request,
               payload: payload
             });
 
-          case 32:
+          case 29:
             if (!hooks.success) {
-              _context.next = 35;
+              _context.next = 32;
               break;
             }
 
-            _context.next = 35;
+            _context.next = 32;
             return call(hooks.success, {
               payload: payload,
               request: request,
@@ -145,60 +137,59 @@ export var generateSaga = function generateSaga(_ref2, _ref) {
               withSchema: !!schema
             });
 
-          case 35:
-            _context.next = 48;
+          case 32:
+            _context.next = 45;
             break;
 
-          case 37:
-            _context.prev = 37;
-            _context.t1 = _context["catch"](13);
+          case 34:
+            _context.prev = 34;
+            _context.t1 = _context["catch"](10);
 
             if (!hooks.beforeFailure) {
-              _context.next = 42;
+              _context.next = 39;
               break;
             }
 
-            _context.next = 42;
+            _context.next = 39;
             return call(hooks.beforeFailure, {
               error: _context.t1,
               request: request
             });
 
-          case 42:
+          case 39:
             if (!dispatchActions) {
-              _context.next = 45;
+              _context.next = 42;
               break;
             }
 
-            _context.next = 45;
+            _context.next = 42;
             return put({
               type: typeCreator.failure,
               errors: _context.t1
             });
 
-          case 45:
+          case 42:
             if (!hooks.failure) {
-              _context.next = 48;
+              _context.next = 45;
               break;
             }
 
-            _context.next = 48;
+            _context.next = 45;
             return call(hooks.failure, {
               error: _context.t1,
               request: request
             });
 
-          case 48:
+          case 45:
           case "end":
             return _context.stop();
         }
       }
-    }, _marked, this, [[13, 37]]);
+    }, _marked, this, [[10, 34]]);
   }
 
   return generatedSaga;
-}; // TODO: make as FORK
-// TODO: test this
+};
 
 var sagaCreator = function sagaCreator(params, options) {
   var _marked2 =

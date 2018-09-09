@@ -13,7 +13,7 @@
     "clean": "rimraf es lib",
     "build:cjs": "cross-env BABEL_ENV=cjs babel src --out-dir lib",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
-    "build": "npm run clean && run-p build:** && npm run postbuild",
+    "build": "yarn run clean && run-p build:** && yarn run postbuild",
     "postbuild": "rm -rf `find ./es -type d -name __tests__` && rm -rf `find ./lib -type d -name __tests__`",
     "eslint": "./node_modules/.bin/eslint src",
     "eslint-fix": "./node_modules/.bin/eslint --fix src",
