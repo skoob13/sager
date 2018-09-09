@@ -1,4 +1,4 @@
-import createType from './types';
+import createType from './creators/typeCreator';
 import entitiesFactory from './factory';
 import { makeRequest } from './api';
 import bindSaga from './binders/sagaBinder';
@@ -14,8 +14,8 @@ const creators = {
 
 export default entitiesFactory;
 export {
-  createType,
-  makeRequest,
   bindSaga,
+  createType,
   creators,
+  makeRequest,
 };
