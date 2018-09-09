@@ -19,7 +19,7 @@ export const generateSaga = ({
 
     let requestParams = {};
     if (extendRequest) {
-      requestParams = yield call(extendRequest, request);
+      requestParams = extendRequest(request);
     }
 
     try {

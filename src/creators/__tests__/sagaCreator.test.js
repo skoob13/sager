@@ -395,4 +395,34 @@ describe('test saga creator', () => {
       .next()
       .isDone();
   });
+
+  test('test saga passes options', () => {
+    const hooks = {};
+    const req = {
+      request: {
+        path: '',
+        method: 'GET',
+      },
+    };
+    const fn = jest.fn();
+    const extendRequest = () => {
+      fn();
+      return {
+        headers: {},
+      };
+    };
+    const s = generateSaga({ typeCreator: sagaType, dispatchActions: true }, { hooks, extendRequest });
+
+    testSaga(s, req)
+      .next()
+      .call(makeRequest, { request: { ...req.request, headers: {} }, token: '' }, {})
+      .next({ data: [] })
+      .put({
+        type: sagaType.success,
+        payload: [],
+        action: req,
+      })
+      .next()
+      .isDone();
+  });
 });
