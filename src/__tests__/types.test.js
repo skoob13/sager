@@ -1,4 +1,5 @@
-import { createType, types } from '../types';
+import createType from '../creators/typeCreator';
+import types from '../types';
 
 // TODO: Improve tests for api
 describe('type index', () => {
