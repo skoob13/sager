@@ -1,25 +1,26 @@
 import { put, call, select } from 'redux-saga/effects';
 import { normalize } from 'normalizr';
 import merge from 'deepmerge';
+import { types } from '../types';
 import { makeRequest } from '../api';
 
 export const generateSaga = ({
+  reducer,
   typeCreator,
   schema,
   dispatchActions,
-  saga,
 }, {
   hooks,
   tokenSelector,
-  getHeaders,
+  extendRequest,
   ...options
 }) => {
   function* generatedSaga(request) {
     const token = tokenSelector ? yield select(tokenSelector) : '';
 
-    const requestParams = {};
-    if (getHeaders) {
-      requestParams.headers = yield call(getHeaders, request);
+    let requestParams = {};
+    if (extendRequest) {
+      requestParams = yield call(extendRequest, request);
     }
 
     try {
@@ -27,7 +28,7 @@ export const generateSaga = ({
         yield call(hooks.beforeRequest, request);
       }
 
-      const data = yield call(saga || makeRequest, {
+      const data = yield call(types[reducer].saga || makeRequest, {
         ...request,
         request: merge(request.request || {}, requestParams),
         token,
