@@ -2,7 +2,7 @@ import { takeEvery } from 'redux-saga/effects';
 import makeType from './typeConstantCreator';
 import types from '../types';
 
-const defaultTypeConfig = {
+export const defaultTypeConfig = {
   dispatchActions: true,
   effect: takeEvery,
   flushErrorsOnRequest: false,
