@@ -9,7 +9,6 @@ module.exports = {
       {
         loose: true,
         modules: false,
-        exclude: ['transform-typeof-symbol'],
         include: ['transform-regenerator'],
         forceAllTransforms: true,
         useBuiltIns: 'usage',
