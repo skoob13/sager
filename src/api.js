@@ -10,7 +10,7 @@ const request = method => ({
   token,
   authorizationType,
 }) => {
-  const { body, params, headers } = options;
+  const { body, params, headers = {} } = options;
 
   if (token) {
     headers.Authorization = `${authorizationType} ${token}`;
