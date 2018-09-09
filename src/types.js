@@ -3,7 +3,7 @@ import makeType from './creators/type';
 
 export const types = {};
 
-const defaultConfig = {
+const defaultTypeConfig = {
   dispatchActions: true,
   effect: takeEvery,
   flushErrorsOnRequest: false,
@@ -15,23 +15,26 @@ const defaultConfig = {
   type: null,
 };
 
-export const createType = (config) => {
-  const { reducer, type } = config;
+export const createType = (typeConfig) => {
+  const { reducer, type } = typeConfig;
+  const existingConfig = types[reducer];
+
   if (!reducer || !type) {
     // eslint-disable-next-line
     console.error('redux-entities: type or reducer are required fields');
   }
 
-  if (types[reducer] && types[reducer].type !== type) {
+  if (existingConfig && existingConfig.type !== type) {
     // eslint-disable-next-line
     console.error(`redux-entities: reducer with name ${reducer} exists already`);
   }
 
-  const typeCreator = makeType(type);
+  const typeCreator = makeType(type, reducer);
 
   types[reducer] = {
-    ...defaultConfig,
-    ...config,
+    ...defaultTypeConfig,
+    ...existingConfig,
+    ...typeConfig,
     typeCreator,
   };
 

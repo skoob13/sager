@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { makeRequest } from './api';
 import { types, createType } from './types';
+import bindSaga from './binders/saga';
 import typeCreator from './creators/type';
 import reducerCreator from './creators/reducer';
 import sagaCreator from './creators/saga';
@@ -37,4 +38,5 @@ export {
   createType,
   makeRequest,
   typeCreator,
+  bindSaga,
 };
