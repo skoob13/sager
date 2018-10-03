@@ -27,9 +27,15 @@ export const generateSaga = ({
         yield call(hooks.beforeRequest, request);
       }
 
+      const { body, ...requestParts } = request.request || {};
+      const mergedRequest = merge(requestParts, requestParams);
+
       const data = yield call(types[typeCreator.type].saga || makeRequest, {
         ...request,
-        request: merge(request.request || {}, requestParams),
+        request: body ? {
+          ...merge(requestParts, requestParams),
+          body,
+        } : mergedRequest,
         token,
       }, options);
 
