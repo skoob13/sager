@@ -95,6 +95,7 @@ describe('test saga creator', () => {
       .put({
         type: sagaType.failure,
         errors: undefined,
+        action: req,
       })
       .next()
       .call(hooks.failure, {
@@ -266,6 +267,7 @@ describe('test saga creator', () => {
       .put({
         type: sagaType.failure,
         errors: undefined,
+        action: req,
       })
       .next()
       .isDone();

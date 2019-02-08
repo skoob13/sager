@@ -79,7 +79,11 @@ export const generateSaga = ({
       }
 
       if (dispatchActions) {
-        yield put({ type: typeCreator.failure, errors: error });
+        yield put({
+          type: typeCreator.failure,
+          action: request,
+          errors: error,
+        });
       }
 
       if (hooks.failure) {
