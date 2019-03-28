@@ -170,6 +170,7 @@ export var generateSaga = function generateSaga(_ref2, _ref) {
             _context.next = 44;
             return put({
               type: typeCreator.failure,
+              action: request,
               errors: _context.t1
             });
 
